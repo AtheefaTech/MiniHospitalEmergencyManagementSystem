@@ -2,6 +2,32 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Safe method for reading integer input
+    private static int readInt(Scanner scanner, String prompt) {
+
+        while (true) {
+
+            System.out.print(prompt);
+
+            if (scanner.hasNextInt()) {
+
+                int value = scanner.nextInt();
+                scanner.nextLine();
+
+                return value;
+
+            }
+            else {
+
+                System.out.println(
+                    "Invalid input. Please enter a number."
+                );
+
+                scanner.nextLine();
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -63,10 +89,8 @@ public class Main {
             System.out.println("14. Display Patient Visit History");
             System.out.println("0. Exit");
             System.out.println("==============================================");
-            System.out.print("Enter your choice: ");
 
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = readInt(scanner, "Enter your choice: ");
 
             switch (choice) {
 
@@ -75,16 +99,18 @@ public class Main {
                     System.out.println();
                     System.out.println("----- ADD PATIENT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
+                    int id = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     System.out.print("Enter Patient Name: ");
                     String name = scanner.nextLine();
 
-                    System.out.print("Enter Age: ");
-                    int age = scanner.nextInt();
-                    scanner.nextLine();
+                    int age = readInt(
+                        scanner,
+                        "Enter Age: "
+                    );
 
                     System.out.print("Enter Contact Number: ");
                     String contact = scanner.nextLine();
@@ -109,17 +135,24 @@ public class Main {
                     System.out.println();
                     System.out.println("----- SEARCH PATIENT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int searchId = scanner.nextInt();
+                    int searchId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
-                    Patient foundPatient = patientBST.search(searchId);
+                    Patient foundPatient =
+                        patientBST.search(searchId);
 
                     if (foundPatient != null) {
+
                         System.out.println("Patient found:");
                         foundPatient.displayPatient();
+
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -138,8 +171,10 @@ public class Main {
                     System.out.println();
                     System.out.println("----- DELETE PATIENT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int deleteId = scanner.nextInt();
+                    int deleteId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     patientBST.delete(deleteId);
 
@@ -150,16 +185,23 @@ public class Main {
                     System.out.println();
                     System.out.println("----- ADD TO EMERGENCY QUEUE -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int queueId = scanner.nextInt();
+                    int queueId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
-                    Patient queuePatient = patientBST.search(queueId);
+                    Patient queuePatient =
+                        patientBST.search(queueId);
 
                     if (queuePatient != null) {
+
                         emergencyQueue.enqueue(queuePatient);
+
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -169,11 +211,17 @@ public class Main {
                     System.out.println();
                     System.out.println("----- PROCESS EMERGENCY PATIENT -----");
 
-                    Patient treatmentPatient = emergencyQueue.dequeue();
+                    Patient treatmentPatient =
+                        emergencyQueue.dequeue();
 
                     if (treatmentPatient != null) {
-                        System.out.println("Patient selected for treatment:");
+
+                        System.out.println(
+                            "Patient selected for treatment:"
+                        );
+
                         treatmentPatient.displayPatient();
+
                     }
 
                     break;
@@ -192,9 +240,10 @@ public class Main {
                     System.out.println();
                     System.out.println("----- ADD TREATMENT RECORD -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int treatmentPatientId = scanner.nextInt();
-                    scanner.nextLine();
+                    int treatmentPatientId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     Patient treatmentRecordPatient =
                         patientBST.search(treatmentPatientId);
@@ -210,19 +259,22 @@ public class Main {
                         System.out.print("Enter Treatment Date: ");
                         String treatmentDate = scanner.nextLine();
 
-                        TreatmentRecord record = new TreatmentRecord(
-                            treatmentRecordPatient.getPatientId(),
-                            treatmentRecordPatient.getPatientName(),
-                            doctorName,
-                            treatment,
-                            treatmentDate
-                        );
+                        TreatmentRecord record =
+                            new TreatmentRecord(
+                                treatmentRecordPatient.getPatientId(),
+                                treatmentRecordPatient.getPatientName(),
+                                doctorName,
+                                treatment,
+                                treatmentDate
+                            );
 
                         treatmentStack.push(record);
 
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -236,8 +288,13 @@ public class Main {
                         treatmentStack.pop();
 
                     if (removedRecord != null) {
-                        System.out.println("Removed treatment record:");
+
+                        System.out.println(
+                            "Removed treatment record:"
+                        );
+
                         removedRecord.displayTreatment();
+
                     }
 
                     break;
@@ -256,18 +313,20 @@ public class Main {
                     System.out.println();
                     System.out.println("----- ADD PATIENT VISIT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int visitPatientId = scanner.nextInt();
-                    scanner.nextLine();
+                    int visitPatientId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     Patient visitPatient =
                         patientBST.search(visitPatientId);
 
                     if (visitPatient != null) {
 
-                        System.out.print("Enter Visit ID: ");
-                        int visitId = scanner.nextInt();
-                        scanner.nextLine();
+                        int visitId = readInt(
+                            scanner,
+                            "Enter Visit ID: "
+                        );
 
                         System.out.print("Enter Visit Date: ");
                         String visitDate = scanner.nextLine();
@@ -289,11 +348,15 @@ public class Main {
                             visitTreatment
                         );
 
-                        visitPatient.getVisitHistory().addVisit(visit);
+                        visitPatient
+                            .getVisitHistory()
+                            .addVisit(visit);
 
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -303,16 +366,20 @@ public class Main {
                     System.out.println();
                     System.out.println("----- SEARCH PATIENT VISIT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int searchVisitPatientId = scanner.nextInt();
+                    int searchVisitPatientId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     Patient searchVisitPatient =
                         patientBST.search(searchVisitPatientId);
 
                     if (searchVisitPatient != null) {
 
-                        System.out.print("Enter Visit ID: ");
-                        int searchVisitId = scanner.nextInt();
+                        int searchVisitId = readInt(
+                            scanner,
+                            "Enter Visit ID: "
+                        );
 
                         Visit foundVisit =
                             searchVisitPatient
@@ -320,16 +387,22 @@ public class Main {
                                 .searchVisit(searchVisitId);
 
                         if (foundVisit != null) {
+
                             System.out.println("Visit found:");
                             foundVisit.displayVisit();
+
                         }
                         else {
+
                             System.out.println("Visit not found.");
+
                         }
 
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -339,16 +412,20 @@ public class Main {
                     System.out.println();
                     System.out.println("----- REMOVE PATIENT VISIT -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int removeVisitPatientId = scanner.nextInt();
+                    int removeVisitPatientId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     Patient removeVisitPatient =
                         patientBST.search(removeVisitPatientId);
 
                     if (removeVisitPatient != null) {
 
-                        System.out.print("Enter Visit ID: ");
-                        int removeVisitId = scanner.nextInt();
+                        int removeVisitId = readInt(
+                            scanner,
+                            "Enter Visit ID: "
+                        );
 
                         removeVisitPatient
                             .getVisitHistory()
@@ -356,7 +433,9 @@ public class Main {
 
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
@@ -366,8 +445,10 @@ public class Main {
                     System.out.println();
                     System.out.println("----- PATIENT VISIT HISTORY -----");
 
-                    System.out.print("Enter Patient ID: ");
-                    int historyPatientId = scanner.nextInt();
+                    int historyPatientId = readInt(
+                        scanner,
+                        "Enter Patient ID: "
+                    );
 
                     Patient historyPatient =
                         patientBST.search(historyPatientId);
@@ -385,7 +466,9 @@ public class Main {
 
                     }
                     else {
+
                         System.out.println("Patient not found.");
+
                     }
 
                     break;
