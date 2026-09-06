@@ -104,12 +104,10 @@ The system provides a menu-driven console interface with the following functions
 12. Search Patient Visit
 13. Remove Patient Visit
 14. Display Patient Visit History
-15. Exit
-
+0. Exit
 Project Structure
 
 MiniHospitalEmergencyManagementSystem/
-│
 ├── Main.java
 ├── Patient.java
 ├── PatientBST.java
